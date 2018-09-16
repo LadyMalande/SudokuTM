@@ -311,47 +311,19 @@ namespace sudokuTM
             {
                 if (ButtonName.ForeColor == Color.MidnightBlue)
                 {
+                    int Row;
+                    if (i < 4) { Row = 1; }
+                        else if (i > 3 && i < 7) { Row = 2; }
+                        else { Row = 3; }
 
-                    switch (i)
-                    {
-                        case 1:
-                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("1", 410, 150, Color.LightGreen);
-                            else CreateNewButton("1", 410, 150, Color.LightSlateGray);
-                            break;
-                        case 2:
-                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("2", 460, 150, Color.LightGreen);
-                            else CreateNewButton("2", 460, 150, Color.LightSlateGray);
-                            break;
-                        case 3:
-                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("3", 510, 150, Color.LightGreen);
-                            else CreateNewButton("3", 510, 150, Color.LightSlateGray);
-                            break;
-                        case 4:
-                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("4", 410, 200, Color.LightGreen);
-                            else CreateNewButton("4", 410, 200, Color.LightSlateGray);
-                            break;
-                        case 5:
-                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("5", 460, 200, Color.LightGreen);
-                            else CreateNewButton("5", 460, 200, Color.LightSlateGray);
-                            break;
-                        case 6:
-                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("6", 510, 200, Color.LightGreen);
-                            else CreateNewButton("6", 510, 200, Color.LightSlateGray);
-                            break;
-                        case 7:
-                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("7", 410, 250, Color.LightGreen);
-                            else CreateNewButton("7", 410, 250, Color.LightSlateGray);
-                            break;
-                        case 8:
-                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("8", 460, 250, Color.LightGreen);
-                            else CreateNewButton("8", 460, 250, Color.LightSlateGray);
-                            break;
-                        case 9:
-                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("9", 510, 250, Color.LightGreen);
-                            else CreateNewButton("9", 510, 250, Color.LightSlateGray);
-                            break;
-                    }
+                    int Column;
+                    if (36 % i == 0 && i != 4 && i != 1 && i != 2) { Column = 3; }
+                        else if (40 % i == 0 && i != 4 && i != 1) { Column = 2; }
+                        else { Column = 1; }
 
+                    if (this.DoHighlightGoodNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton(i.ToString(), 360 + Column * 50, 100 + Row * 50, Color.LightGreen);
+                        else CreateNewButton(i.ToString(), 360 + Column * 50, 100 + Row * 50, Color.LightSlateGray);
+                                           
                     CreateNewButton("Vymaž", 420, 300, Color.LightSlateGray);
                 }
             }
