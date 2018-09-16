@@ -59,11 +59,11 @@
             this.lblMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblMessage.Location = new System.Drawing.Point(19, 29);
             this.lblMessage.Name = "lblMessage";
-            this.lblMessage.Size = new System.Drawing.Size(64, 25);
+            this.lblMessage.Size = new System.Drawing.Size(62, 25);
             this.lblMessage.TabIndex = 2;
-            this.lblMessage.Text = "label1";
+            this.lblMessage.Text = "Text1";
             // 
-            // Form4
+            // WantToSave
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -71,7 +71,7 @@
             this.Controls.Add(this.lblMessage);
             this.Controls.Add(this.Rbutton);
             this.Controls.Add(this.Lbutton);
-            this.Name = "Form4";
+            this.Name = "WantToSave";
             this.Load += new System.EventHandler(this.WantToSave_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

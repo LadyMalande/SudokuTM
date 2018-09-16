@@ -16,14 +16,14 @@ namespace sudokuTM
     public partial class MainMenu : Form
     {
         /// <summary>
-        /// Parametr AlreadyLoaded zamezuje opakovanému zavolání metody sudoku.LoadDirectory(), která vyžaduje existenci uložené hry.
+        /// Parametr AlreadyLoaded zamezuje opakovanému zavolání metody Sudoku.LoadDirectory(), která vyžaduje existenci uložené hry.
         /// </summary>
         public static bool AlreadyLoaded;
 
         /// <summary>
-        /// Form3 je okno samotné hry sudoku.
+        /// Form3 je okno samotné hry Sudoku.
         /// </summary>
-        static public Sudoku sudoku;
+        static public Sudoku Sudoku;
         /// <summary>
         /// Při zapnutí souboru SudokuTM.exe se spustí právě Form1. Ze základu je parametr AlreadyLoaded nastaven na false, protože tlačítko "Pokračovat" nemohlo být použito.
         /// </summary>
@@ -42,12 +42,12 @@ namespace sudokuTM
             if (File.Exists("./lehka/pokracovani.txt"))
             {
                 AlreadyLoaded = false;
-                Pokracovat.Show();
-                Pokracovat.Click += new EventHandler(Continue_Click);
+                Continue.Show();
+                Continue.Click += new EventHandler(Continue_Click);
             }
             else
             {
-                Pokracovat.Hide();
+                Continue.Hide();
             }
         }
         /// <summary>
@@ -99,12 +99,12 @@ namespace sudokuTM
            
             if (!AlreadyLoaded)
             {
-                sudoku = new Sudoku();
+                Sudoku = new Sudoku();
 
-                sudoku.LoadDirectory("pokracovani");
-                sudoku.Text = "Sudoku pokračování";
-                sudoku.Show();
-                Pokracovat.Hide();
+                Sudoku.LoadDirectory("pokracovani");
+                Sudoku.Text = "Sudoku pokračování";
+                Sudoku.Show();
+                Continue.Hide();
             }
             
             AlreadyLoaded = true;
@@ -122,42 +122,42 @@ namespace sudokuTM
         }
 
         /// <summary>
-        /// Tato metoda po kliknutí na tlačítko "Lehká" načte sudoku ze složky "lehka" a objeví se Form3 s načtenou počáteční pozicí hry.
+        /// Tato metoda po kliknutí na tlačítko "Lehká" načte Sudoku ze složky "lehka" a objeví se Form3 s načtenou počáteční pozicí hry.
         /// </summary>
         /// <param name="sender">Obsahuje data o objektu, který událost vyvolal.</param>
         /// <param name="e">Obsahuje informace o události.</param>
         private void Easy_Click(object sender, EventArgs e)
         {
-            sudoku = new Sudoku();
-            sudoku.LoadDirectory("lehka");            
-            sudoku.Text = "Sudoku lehké";
-            sudoku.Show();
+            Sudoku = new Sudoku();
+            Sudoku.LoadDirectory("lehka");            
+            Sudoku.Text = "Sudoku lehké";
+            Sudoku.Show();
         }
 
         /// <summary>
-        /// Tato metoda po kliknutí na tlačítko "Střední" načte sudoku ze složky "stredni" a objeví se Form3 s načtenou počáteční pozicí hry.
+        /// Tato metoda po kliknutí na tlačítko "Střední" načte Sudoku ze složky "stredni" a objeví se Form3 s načtenou počáteční pozicí hry.
         /// </summary>
         /// <param name="sender">Obsahuje data o objektu, který událost vyvolal.</param>
         /// <param name="e">Obsahuje informace o události.</param>
         private void Normal_Click(object sender, EventArgs e)
         {
-            sudoku = new Sudoku();
-            sudoku.LoadDirectory("stredni");            
-            sudoku.Text = "Sudoku středně těžké";
-            sudoku.Show();
+            Sudoku = new Sudoku();
+            Sudoku.LoadDirectory("stredni");            
+            Sudoku.Text = "Sudoku středně těžké";
+            Sudoku.Show();
         }
 
         /// <summary>
-        /// Tato metoda po kliknutí na tlačítko "Těžká" načte sudoku ze složky "tezka" a objeví se Form3 s načtenou počáteční pozicí hry.
+        /// Tato metoda po kliknutí na tlačítko "Těžká" načte Sudoku ze složky "tezka" a objeví se Form3 s načtenou počáteční pozicí hry.
         /// </summary>
         /// <param name="sender">Obsahuje data o objektu, který událost vyvolal.</param>
         /// <param name="e">Obsahuje informace o události.</param>
         private void Hard_Click(object sender, EventArgs e)
         {
-            sudoku = new Sudoku();
-            sudoku.LoadDirectory("tezka");            
-            sudoku.Text = "Sudoku těžké";
-            sudoku.Show();
+            Sudoku = new Sudoku();
+            Sudoku.LoadDirectory("tezka");            
+            Sudoku.Text = "Sudoku těžké";
+            Sudoku.Show();
         }
     }
 }

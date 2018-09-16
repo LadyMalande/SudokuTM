@@ -13,32 +13,32 @@ using System.Diagnostics;
 
 namespace sudokuTM
 {   /// <summary>
-    /// Třída Form3 obstarává funkčnost okna se samotnou hrou sudoku. Zahrnuje mřížku se hrou, časomíru, tlačítka na pozastavení hry, uložení hry a vyhodnocení hry. Dynamicky také načítá tlačítka pro doplnění sudoku.
+    /// Třída Form3 obstarává funkčnost okna se samotnou hrou Sudoku. Zahrnuje mřížku se hrou, časomíru, tlačítka na pozastavení hry, uložení hry a vyhodnocení hry. Dynamicky také načítá tlačítka pro doplnění Sudoku.
     /// </summary>
     public partial class Sudoku : Form
     {
         /// <summary>
-        /// Označuje Button z mřížky sudoku, který má právě uživatel označený.
+        /// Označuje Button z mřížky Sudoku, který má právě uživatel označený.
         /// </summary>
         public Button WhereIWantToFillInNumber;
         /// <summary>
-        /// Button pauza slouží po kliknutí k pozastavení hry.
+        /// Button PauseButton slouží po kliknutí k pozastavení hry.
         /// </summary>
-        public Button pauza;
+        public Button PauseButton;
         /// <summary>
-        /// Seznam tlačítek ListOfNumbers v sobě zahrnuje tlačítka, která se generují dynamicky podle zvoleného pole, kam chce uživatel číslo doplnit.
+        /// Seznam tlačítek ListOfNumbers v sobě zahrnuje tlačítka, která se generují dynamicky podle zvoleného WordTypeForPole, kam chce uživatel číslo doplnit.
         /// </summary>
         public List<Button> ListOfNumbers = new List<Button>();
         /// <summary>
         /// Pomocný seznam na předání tlačítka do dalších metod.
         /// </summary>
-        public List<Button> LPauza = new List<Button>();
+        public List<Button> ListOfPause = new List<Button>();
         /// <summary>
         /// Číslo označující počet vyplněných políček.
         /// </summary>
         public int FilledInFields = 0;
         /// <summary>
-        /// String, který je generován z úrovně obtížnosti a náhodného čísla. Označuje soubor, ze kterého se bude načítat sudoku.
+        /// String, který je generován z úrovně obtížnosti a náhodného čísla. Označuje soubor, ze kterého se bude načítat Sudoku.
         /// </summary>
         public string FileName;
         /// <summary>
@@ -46,16 +46,16 @@ namespace sudokuTM
         /// </summary>
         public string SudokuLoading;
         /// <summary>
-        /// Označuje stav fáze odchodu z aplikace. Pokud je false, program se zeptá, zda si přeje uživatel uložit sudoku. Pokud je true, hned se odejde z aplikace.
+        /// Označuje stav fáze odchodu z aplikace. Pokud je false, program se zeptá, zda si přeje uživatel uložit Sudoku. Pokud je true, hned se odejde z aplikace.
         /// </summary>
         public static bool Leaving;
 
         /// <summary>
-        /// Pole obsahující 81 tlačítek potřebných k vyplnění sudoku.
+        /// Pole obsahující 81 tlačítek potřebných k vyplnění Sudoku.
         /// </summary>
         public Button[,] SudokuGrid = new Button[9, 9];
         /// <summary>
-        /// Měří dobu, za kterou uživatel sudoku vyluštil.
+        /// Měří dobu, za kterou uživatel Sudoku vyluštil.
         /// </summary>
         Stopwatch StopWatch = new Stopwatch();
         /// <summary>
@@ -65,24 +65,24 @@ namespace sudokuTM
         /// <summary>
         /// Pomocná hodnota pro vypsání uplynulého času do stringu.
         /// </summary>
-        public TimeSpan ts;
+        public TimeSpan TimeSpanHelpingVariable;
 
         /// <summary>
-        /// Kontroluje správnost dosazení čísel do mřížky sudoku.
+        /// Kontroluje správnost dosazení čísel do mřížky Sudoku.
         /// </summary>
-        /// <returns>True - pokud je sudoku vyplněno správně. False - pokud je sudoku vyplněno nesprávně.</returns>
+        /// <returns>True - pokud je Sudoku vyplněno správně. False - pokud je Sudoku vyplněno nesprávně.</returns>
         public bool CorrectlyFilledIn()
         {
             StreamReader sr = new StreamReader(FileName);
             for (int i = 1; i < 10; i++)
             {
-                string radka = sr.ReadLine();
-                string[] cisla = radka.Split(' ');
+                string Row = sr.ReadLine();
+                string[] Numbers = Row.Split(' ');
                 for (int j = 1; j < 10; j++)
                 {
-                    if (cisla[2 * j - 1] == "0")
+                    if (Numbers[2 * j - 1] == "0")
                     {
-                        if (this.Controls[(i-1).ToString() + (j-1).ToString()].Text != cisla[2 * j - 2])
+                        if (this.Controls[(i-1).ToString() + (j-1).ToString()].Text != Numbers[2 * j - 2])
                             return false;
                     }
                 }
@@ -91,7 +91,7 @@ namespace sudokuTM
         }
        
         /// <summary>
-        /// Zavolá se po kliknutí na tlačítko "Vyhodnoť". Oznámí uživateli, v jakém stavu je jeho hrané sudoku. Umí oznámit úspěšné/neúspěšné doplnění sudoku nebo chybějící počet vyplněných polí.
+        /// Zavolá se po kliknutí na tlačítko "Vyhodnoť". Oznámí uživateli, v jakém stavu je jeho hrané Sudoku. Umí oznámit úspěšné/neúspěšné doplnění Sudoku nebo chybějící počet vyplněných polí.
         /// </summary>
         public void EvaluateSudoku()
         {
@@ -101,29 +101,29 @@ namespace sudokuTM
                 {
                     StopWatch.Stop();
                     if (TimeLapse != null)
-                    { ts = StopWatch.Elapsed + TimeLapse; }
-                    else { ts = StopWatch.Elapsed; }
-                    string formatovanycas = String.Format("{0:00}:{1:00}:{2:00}", ts.Hours, ts.Minutes, ts.Seconds);
-                    MessageBox.Show(String.Format("Gratulujeme! Správně jste dořešili zadané sudoku! ☻ \nSudoku jste dořešili v čase {0}.", formatovanycas));
+                    { TimeSpanHelpingVariable = StopWatch.Elapsed + TimeLapse; }
+                    else { TimeSpanHelpingVariable = StopWatch.Elapsed; }
+                    string FormatedTime = String.Format("{0:00}:{1:00}:{2:00}", TimeSpanHelpingVariable.Hours, TimeSpanHelpingVariable.Minutes, TimeSpanHelpingVariable.Seconds);
+                    MessageBox.Show(String.Format("Gratulujeme! Správně jste dořešili zadané Sudoku! ☻ \nSudoku jste dořešili v čase {0}.", FormatedTime));
                 }
                 else MessageBox.Show("Vaše řešení není správné!");
 
             }
-            else if (FilledInFields == 0) MessageBox.Show("Nemáte načtené sudoku!");
+            else if (FilledInFields == 0) MessageBox.Show("Nemáte načtené Sudoku!");
 
             else
             {
-                string pole;
+                string WordTypeForPole;
                 int zbyvadoplnit = 81 - FilledInFields;
                 if (zbyvadoplnit < 5)
                 {
-                    pole = "pole";
+                    WordTypeForPole = "pole";
                 }
                 else
                 {
-                    pole = "polí";
+                    WordTypeForPole = "polí";
                 }
-                MessageBox.Show(string.Format("Nemáte vyplněná všechna pole! Máte vyplněno {0} polí. Zbývá doplnit {1} {2}.", FilledInFields, zbyvadoplnit, pole));
+                MessageBox.Show(string.Format("Nemáte vyplněná všechna pole! Máte vyplněno {0} polí. Zbývá doplnit {1} {2}.", FilledInFields, zbyvadoplnit, WordTypeForPole));
             }
         }
         /// <summary>
@@ -135,11 +135,11 @@ namespace sudokuTM
         /// <returns></returns>
         public bool IsNumberInTheSameCell(int number, int r, int s)
         {
-            for (int radek = r; radek < r + 3; radek++)
+            for (int Row = r; Row < r + 3; Row++)
             {
-                for (int sloupec = s; sloupec < s + 3; sloupec++)
+                for (int Column = s; Column < s + 3; Column++)
                 {
-                    if (this.Controls[radek.ToString() + sloupec.ToString()].Text == number.ToString())
+                    if (this.Controls[Row.ToString() + Column.ToString()].Text == number.ToString())
                     {
                         return false;
                     }
@@ -147,30 +147,30 @@ namespace sudokuTM
             }
             return true;
         }
-            /// <summary>
-            /// Kontroluje, zda je na vybrané tlačítko možno doplnit právě zkoumané číslo. Zkoumá se pouze základní návaznost na ostatní čísla tj. unikátnost v řádku, sloupci a buňce.
-            /// </summary>
-            /// <param name="cislo">Zkoumané číslo (1-9)</param>
-            /// <param name="ButtonName">Označení buňky, u které se zkoumá dostupnost</param>
-            /// <returns>True - pokud se číslo nevyskytuje ani ve sloupci, řádku, buňce. False - pokud se číslo vyskytuje alespoň ve sloupci, řádku nebo buňce.</returns>
-            public bool CanBeFilledIn(int cislo, Button ButtonName)
+        /// <summary>
+        /// Kontroluje, zda je na vybrané tlačítko možno doplnit právě zkoumané číslo. Zkoumá se pouze základní návaznost na ostatní čísla tj. unikátnost v řádku, sloupci a buňce.
+        /// </summary>
+        /// <param name="TestedNumber">Zkoumané číslo (1-9)</param>
+        /// <param name="ButtonName">Označení buňky, u které se zkoumá dostupnost</param>
+        /// <returns>True - pokud se číslo nevyskytuje ani ve sloupci, řádku, buňce. False - pokud se číslo vyskytuje alespoň ve sloupci, řádku nebo buňce.</returns>
+        public bool CanBeFilledIn(int TestedNumber, Button ButtonName)
         {
 
             char chari = ButtonName.Name[0];
             char charj = ButtonName.Name[1];
 
 
-            for (int sloupec = 0; sloupec < 9; sloupec++)
+            for (int Column = 0; Column < 9; Column++)
             {
 
-                if (this.Controls[chari.ToString() + sloupec.ToString()].Text == cislo.ToString())
+                if (this.Controls[chari.ToString() + Column.ToString()].Text == TestedNumber.ToString())
                 {
                     return false;
                 }
             }
-            for (int radek = 0; radek < 9; radek++)
+            for (int Row = 0; Row < 9; Row++)
             {
-                if (this.Controls[radek.ToString() + charj.ToString()].Text == cislo.ToString())
+                if (this.Controls[Row.ToString() + charj.ToString()].Text == TestedNumber.ToString())
                 {
                     return false;
                 }
@@ -185,15 +185,15 @@ namespace sudokuTM
             {
                 if (j > -1 && j < 3)
                 {
-                    if (!(IsNumberInTheSameCell(cislo, 0, 0))) return false;
+                    if (!(IsNumberInTheSameCell(TestedNumber, 0, 0))) return false;
                 }
                 else if (j > 2 && j < 6)
                 {
-                    if (!(IsNumberInTheSameCell(cislo, 0, 3))) return false;
+                    if (!(IsNumberInTheSameCell(TestedNumber, 0, 3))) return false;
                 }
                 else
                 {
-                    if (!(IsNumberInTheSameCell(cislo, 0, 6))) return false;
+                    if (!(IsNumberInTheSameCell(TestedNumber, 0, 6))) return false;
                 }
 
             }
@@ -201,30 +201,30 @@ namespace sudokuTM
             {
                 if (j > -1 && j < 3)
                 {
-                    if (!(IsNumberInTheSameCell(cislo, 3, 0))) return false;
+                    if (!(IsNumberInTheSameCell(TestedNumber, 3, 0))) return false;
                 }
                 else if (j > 2 && j < 6)
                 {
-                    if (!(IsNumberInTheSameCell(cislo, 3, 3))) return false;
+                    if (!(IsNumberInTheSameCell(TestedNumber, 3, 3))) return false;
                 }
                 else
                 {
-                    if (!(IsNumberInTheSameCell(cislo, 3, 6))) return false;
+                    if (!(IsNumberInTheSameCell(TestedNumber, 3, 6))) return false;
                 }
             }
             else if (i > 5 && i < 9)
             {
                 if (j > -1 && j < 3)
                 {
-                    if (!(IsNumberInTheSameCell(cislo, 6, 0))) return false;
+                    if (!(IsNumberInTheSameCell(TestedNumber, 6, 0))) return false;
                 }
                 else if (j > 2 && j < 6)
                 {
-                    if (!(IsNumberInTheSameCell(cislo, 6, 3))) return false;
+                    if (!(IsNumberInTheSameCell(TestedNumber, 6, 3))) return false;
                 }
                 else
                 {
-                    if (!(IsNumberInTheSameCell(cislo, 6, 6))) return false;
+                    if (!(IsNumberInTheSameCell(TestedNumber, 6, 6))) return false;
                 }
             }
             return true;
@@ -258,10 +258,10 @@ namespace sudokuTM
         /// Metoda vytváří nové tlačítko pro doplnění v mřížce.
         /// </summary>
         /// <param name="i">Číslo, které bude na tlačítku vidět</param>
-        /// <param name="left">O kolik pixelů má být tlačítko odsazeno zleva</param>
-        /// <param name="top">O kolik pixelů má být tlačítko odsazeno shora</param>
-        /// <param name="barva">Jakou barvu má tlačítko mít</param>
-        public void CreateNewButton(string i, int left, int top, Color barva)
+        /// <param name="Left">O kolik pixelů má být tlačítko odsazeno zleva</param>
+        /// <param name="Top">O kolik pixelů má být tlačítko odsazeno shora</param>
+        /// <param name="Colour">Jakou barvu má tlačítko mít</param>
+        public void CreateNewButton(string i, int Left, int Top, Color Colour)
         {
             Button Nabidka = new Button();
             if (i == "Vymaž")
@@ -276,11 +276,11 @@ namespace sudokuTM
 
                 Nabidka.Width = 40;
             }
-            Nabidka.BackColor = barva;
+            Nabidka.BackColor = Colour;
 
             Nabidka.ForeColor = Color.Black;
 
-            Nabidka.Location = new Point(left, top);
+            Nabidka.Location = new Point(Left, Top);
 
             Nabidka.Text = i;
 
@@ -295,7 +295,7 @@ namespace sudokuTM
         /// <summary>
         /// Vytvoří nabídku čísel pro doplnění i s tlačítkem "Vymaž".
         /// </summary>
-        /// <param name="ButtonName">Pole, které je označené v sudoku mřížce.</param>
+        /// <param name="ButtonName">Pole, které je označené v Sudoku mřížce.</param>
         public void ShowNumberMenu(Button ButtonName)
         {
             MainMenu.AlreadyLoaded = false;
@@ -315,39 +315,39 @@ namespace sudokuTM
                     switch (i)
                     {
                         case 1:
-                            if (this.checkBox2.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("1", 410, 150, Color.LightGreen);
+                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("1", 410, 150, Color.LightGreen);
                             else CreateNewButton("1", 410, 150, Color.LightSlateGray);
                             break;
                         case 2:
-                            if (this.checkBox2.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("2", 460, 150, Color.LightGreen);
+                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("2", 460, 150, Color.LightGreen);
                             else CreateNewButton("2", 460, 150, Color.LightSlateGray);
                             break;
                         case 3:
-                            if (this.checkBox2.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("3", 510, 150, Color.LightGreen);
+                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("3", 510, 150, Color.LightGreen);
                             else CreateNewButton("3", 510, 150, Color.LightSlateGray);
                             break;
                         case 4:
-                            if (this.checkBox2.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("4", 410, 200, Color.LightGreen);
+                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("4", 410, 200, Color.LightGreen);
                             else CreateNewButton("4", 410, 200, Color.LightSlateGray);
                             break;
                         case 5:
-                            if (this.checkBox2.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("5", 460, 200, Color.LightGreen);
+                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("5", 460, 200, Color.LightGreen);
                             else CreateNewButton("5", 460, 200, Color.LightSlateGray);
                             break;
                         case 6:
-                            if (this.checkBox2.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("6", 510, 200, Color.LightGreen);
+                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("6", 510, 200, Color.LightGreen);
                             else CreateNewButton("6", 510, 200, Color.LightSlateGray);
                             break;
                         case 7:
-                            if (this.checkBox2.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("7", 410, 250, Color.LightGreen);
+                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("7", 410, 250, Color.LightGreen);
                             else CreateNewButton("7", 410, 250, Color.LightSlateGray);
                             break;
                         case 8:
-                            if (this.checkBox2.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("8", 460, 250, Color.LightGreen);
+                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("8", 460, 250, Color.LightGreen);
                             else CreateNewButton("8", 460, 250, Color.LightSlateGray);
                             break;
                         case 9:
-                            if (this.checkBox2.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("9", 510, 250, Color.LightGreen);
+                            if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton("9", 510, 250, Color.LightGreen);
                             else CreateNewButton("9", 510, 250, Color.LightSlateGray);
                             break;
                     }
@@ -367,16 +367,16 @@ namespace sudokuTM
         /// <summary>
         /// Vrací pravdivostní hodnotu, zda jsou dvě tlačítka ve stejné buňce.
         /// </summary>
-        /// <param name="button1i">Řádková poloha tlačítka 1</param>
-        /// <param name="button1j">Sloupcová poloha tlačítka 1</param>
-        /// <param name="button2i">Řádková poloha tlačítka 2</param>
-        /// <param name="button2j">Sloupcová poloha tlačítka 2</param>
+        /// <param name="Button1i">Řádková poloha tlačítka 1</param>
+        /// <param name="Button1j">Sloupcová poloha tlačítka 1</param>
+        /// <param name="Button2i">Řádková poloha tlačítka 2</param>
+        /// <param name="Button2j">Sloupcová poloha tlačítka 2</param>
         /// <param name="i">Dolní hranice zkoumaného řádku</param>
         /// <param name="j">Dolní hranice zkoumaného sloupce</param>
         /// <returns></returns>
-        public bool IsInTheSameCell(int button1i, int button1j, int button2i, int button2j, int i, int j)
+        public bool IsInTheSameCell(int Button1i, int Button1j, int Button2i, int Button2j, int i, int j)
         {
-            if ((button1i > i) && (button1i < i + 4) && (i < button2i) && (button2i < i + 4) && (button1j > j) && (button1j < j + 4) && (j < button2j) && (button2j < j + 4))
+            if ((Button1i > i) && (Button1i < i + 4) && (i < Button2i) && (Button2i < i + 4) && (Button1j > j) && (Button1j < j + 4) && (j < Button2j) && (Button2j < j + 4))
             {
                 return true;
             }
@@ -384,13 +384,13 @@ namespace sudokuTM
         }
 
         /// <summary>
-        /// Po kliknutí na již vyplněné pole zvýrazní zeleně všechna ostatní stejná čísla, která jsou umístěna správně, a červeně zvýrazní čísla, která jsou umístěna špatně vzhledem ke sloupci, řádku nebo buňce.
+        /// Po kliknutí na již vyplněné WordTypeForPole zvýrazní zeleně všechna ostatní stejná čísla, která jsou umístěna správně, a červeně zvýrazní čísla, která jsou umístěna špatně vzhledem ke sloupci, řádku nebo buňce.
         /// </summary>
         /// <param name="ButtonName">Pole, vzhledem ke kterému se vybarvování provádí.</param>
         public void HighlightSameNumbers(Button ButtonName)
         {
             MainMenu.AlreadyLoaded = false;
-            List<string> SeznamPoliSeStejnymCislem = new List<string>();
+            List<string> ListOfCellsOfTheSameNumber = new List<string>();
             WhereIWantToFillInNumber = ButtonName;
 
             for (int i = 0; i < 9; i++)
@@ -400,13 +400,13 @@ namespace sudokuTM
                         this.Controls[i.ToString() + j.ToString()].BackColor = Color.WhiteSmoke;
                     }
                     else this.Controls[i.ToString() + j.ToString()].BackColor = Color.White;
-            if (this.checkBox1.Checked == true)
+            if (this.HighlightSameNumbersCheckBox.Checked == true)
             {
-                char chari = ButtonName.Name[0];
-                char charj = ButtonName.Name[1];
-                int celli = (int)Char.GetNumericValue(chari);
-                int cellj = (int)Char.GetNumericValue(charj);
-                bool JeVKonfliktu = false;
+                char Chari = ButtonName.Name[0];
+                char Charj = ButtonName.Name[1];
+                int Celli = (int)Char.GetNumericValue(Chari);
+                int Cellj = (int)Char.GetNumericValue(Charj);
+                bool IsInConflict = false;
                 ButtonName.BackColor = Color.LightGreen;
 
                 for (int i = 0; i < 9; i++)
@@ -418,48 +418,48 @@ namespace sudokuTM
 
                             if (this.Controls[i.ToString() + j.ToString()].Text == ButtonName.Text)
                             {
-                                SeznamPoliSeStejnymCislem.Add(this.Controls[i.ToString() + j.ToString()].Name);
+                                ListOfCellsOfTheSameNumber.Add(this.Controls[i.ToString() + j.ToString()].Name);
                                 this.Controls[i.ToString() + j.ToString()].BackColor = Color.LightGreen;
                             }
                             
                         }
-                        foreach (var button1 in SeznamPoliSeStejnymCislem)
+                        foreach (var Button1 in ListOfCellsOfTheSameNumber)
                         {
-                            JeVKonfliktu = false;
-                            char charbutton1i = button1[0];
-                            char charbutton1j = button1[1];
-                            int intbutton1i = (int)Char.GetNumericValue(charbutton1i);
-                            int intbutton1j = (int)Char.GetNumericValue(charbutton1j);
+                            IsInConflict = false;
+                            char CharButton1i = Button1[0];
+                            char CharButton1j = Button1[1];
+                            int IntButton1i = (int)Char.GetNumericValue(CharButton1i);
+                            int IntButton1j = (int)Char.GetNumericValue(CharButton1j);
 
-                            foreach (var button2 in SeznamPoliSeStejnymCislem)
+                            foreach (var Button2 in ListOfCellsOfTheSameNumber)
                             {
-                                char charbutton2i = button2[0];
-                                char charbutton2j = button2[1];
-                                int intbutton2i = (int)Char.GetNumericValue(charbutton2i);
-                                int intbutton2j = (int)Char.GetNumericValue(charbutton2j);
-                                if ((intbutton1i == intbutton2i) || (intbutton1j == intbutton2j))
+                                char CharButton2i = Button2[0];
+                                char CharButton2j = Button2[1];
+                                int IntButton2i = (int)Char.GetNumericValue(CharButton2i);
+                                int IntButton2j = (int)Char.GetNumericValue(CharButton2j);
+                                if ((IntButton1i == IntButton2i) || (IntButton1j == IntButton2j))
                                 {
-                                    if ((intbutton1i == intbutton2i) && (intbutton1j == intbutton2j))
+                                    if ((IntButton1i == IntButton2i) && (IntButton1j == IntButton2j))
                                     {
-                                        if (!JeVKonfliktu) this.Controls[button1].BackColor = Color.LightGreen;
-                                        else this.Controls[button1].BackColor = Color.Red;
+                                        if (!IsInConflict) this.Controls[Button1].BackColor = Color.LightGreen;
+                                        else this.Controls[Button1].BackColor = Color.Red;
                                     }
                                     else
                                     {
-                                        this.Controls[button2].BackColor = Color.Red;
-                                        this.Controls[button1].BackColor = Color.Red;
-                                        JeVKonfliktu = true;
+                                        this.Controls[Button2].BackColor = Color.Red;
+                                        this.Controls[Button1].BackColor = Color.Red;
+                                        IsInConflict = true;
                                     }
                                 }
-                                else if (IsInTheSameCell(intbutton1i, intbutton1j, intbutton2i, intbutton2j, -1, -1)) { this.Controls[button1].BackColor = Color.Red; this.Controls[button2].BackColor = Color.Red; JeVKonfliktu = true; }
-                                else if (IsInTheSameCell(intbutton1i, intbutton1j, intbutton2i, intbutton2j, -1, 2)) { this.Controls[button1].BackColor = Color.Red; this.Controls[button2].BackColor = Color.Red; JeVKonfliktu = true; }
-                                else if (IsInTheSameCell(intbutton1i, intbutton1j, intbutton2i, intbutton2j, -1, 5)) { this.Controls[button1].BackColor = Color.Red; this.Controls[button2].BackColor = Color.Red; JeVKonfliktu = true; }
-                                else if (IsInTheSameCell(intbutton1i, intbutton1j, intbutton2i, intbutton2j, 2, -1)) { this.Controls[button1].BackColor = Color.Red; this.Controls[button2].BackColor = Color.Red; JeVKonfliktu = true; }
-                                else if (IsInTheSameCell(intbutton1i, intbutton1j, intbutton2i, intbutton2j, 2, 2)) { this.Controls[button1].BackColor = Color.Red; this.Controls[button2].BackColor = Color.Red; JeVKonfliktu = true; }
-                                else if (IsInTheSameCell(intbutton1i, intbutton1j, intbutton2i, intbutton2j, 2, 5)) { this.Controls[button1].BackColor = Color.Red; this.Controls[button2].BackColor = Color.Red; JeVKonfliktu = true; }
-                                else if (IsInTheSameCell(intbutton1i, intbutton1j, intbutton2i, intbutton2j, 5, -1)) { this.Controls[button1].BackColor = Color.Red; this.Controls[button2].BackColor = Color.Red; JeVKonfliktu = true; }
-                                else if (IsInTheSameCell(intbutton1i, intbutton1j, intbutton2i, intbutton2j, 5, 2)) { this.Controls[button1].BackColor = Color.Red; this.Controls[button2].BackColor = Color.Red; JeVKonfliktu = true; }
-                                else if (IsInTheSameCell(intbutton1i, intbutton1j, intbutton2i, intbutton2j, 5, 5)) { this.Controls[button1].BackColor = Color.Red; this.Controls[button2].BackColor = Color.Red; JeVKonfliktu = true; }
+                                else if (IsInTheSameCell(IntButton1i, IntButton1j, IntButton2i, IntButton2j, -1, -1)) { this.Controls[Button1].BackColor = Color.Red; this.Controls[Button2].BackColor = Color.Red; IsInConflict = true; }
+                                else if (IsInTheSameCell(IntButton1i, IntButton1j, IntButton2i, IntButton2j, -1, 2)) { this.Controls[Button1].BackColor = Color.Red; this.Controls[Button2].BackColor = Color.Red; IsInConflict = true; }
+                                else if (IsInTheSameCell(IntButton1i, IntButton1j, IntButton2i, IntButton2j, -1, 5)) { this.Controls[Button1].BackColor = Color.Red; this.Controls[Button2].BackColor = Color.Red; IsInConflict = true; }
+                                else if (IsInTheSameCell(IntButton1i, IntButton1j, IntButton2i, IntButton2j, 2, -1)) { this.Controls[Button1].BackColor = Color.Red; this.Controls[Button2].BackColor = Color.Red; IsInConflict = true; }
+                                else if (IsInTheSameCell(IntButton1i, IntButton1j, IntButton2i, IntButton2j, 2, 2)) { this.Controls[Button1].BackColor = Color.Red; this.Controls[Button2].BackColor = Color.Red; IsInConflict = true; }
+                                else if (IsInTheSameCell(IntButton1i, IntButton1j, IntButton2i, IntButton2j, 2, 5)) { this.Controls[Button1].BackColor = Color.Red; this.Controls[Button2].BackColor = Color.Red; IsInConflict = true; }
+                                else if (IsInTheSameCell(IntButton1i, IntButton1j, IntButton2i, IntButton2j, 5, -1)) { this.Controls[Button1].BackColor = Color.Red; this.Controls[Button2].BackColor = Color.Red; IsInConflict = true; }
+                                else if (IsInTheSameCell(IntButton1i, IntButton1j, IntButton2i, IntButton2j, 5, 2)) { this.Controls[Button1].BackColor = Color.Red; this.Controls[Button2].BackColor = Color.Red; IsInConflict = true; }
+                                else if (IsInTheSameCell(IntButton1i, IntButton1j, IntButton2i, IntButton2j, 5, 5)) { this.Controls[Button1].BackColor = Color.Red; this.Controls[Button2].BackColor = Color.Red; IsInConflict = true; }
 
 
                             }
@@ -468,7 +468,7 @@ namespace sudokuTM
             }
         }
         /// <summary>
-        /// Určuje složku, ze které se bude sudoku načítat.
+        /// Určuje složku, ze které se bude Sudoku načítat.
         /// </summary>
         public static string Directory;
 
@@ -495,18 +495,18 @@ namespace sudokuTM
                 StreamReader sr = new StreamReader(SudokuLoading);
                 for (int i = 1; i < 10; i++)
                 {
-                    string radka = sr.ReadLine();
-                    string[] cisla = radka.Split(' ');
+                    string Row = sr.ReadLine();
+                    string[] Numbers = Row.Split(' ');
                     for (int j = 1; j < 10; j++)
                     {
-                        if (cisla[2 * j - 1] == "1")
+                        if (Numbers[2 * j - 1] == "1")
                         {
-                            SudokuGrid[i - 1, j - 1].Text = cisla[2 * j - 2];
+                            SudokuGrid[i - 1, j - 1].Text = Numbers[2 * j - 2];
                             SudokuGrid[i - 1, j - 1].ForeColor = Color.Black;
                             SudokuGrid[i - 1, j - 1].BackColor = Color.WhiteSmoke;
                             FilledInFields++;
                         }
-                        else if (cisla[2 * j - 1] == "0")
+                        else if (Numbers[2 * j - 1] == "0")
                         {
                             SudokuGrid[i - 1,j -1 ].Text = " ";
                             SudokuGrid[i - 1, j - 1].ForeColor = Color.MidnightBlue;
@@ -514,7 +514,7 @@ namespace sudokuTM
                         }
                         else
                         {
-                            SudokuGrid[i - 1, j - 1].Text = cisla[2 * j - 2];
+                            SudokuGrid[i - 1, j - 1].Text = Numbers[2 * j - 2];
                             SudokuGrid[i - 1, j - 1].ForeColor = Color.MidnightBlue;
                             SudokuGrid[i - 1, j - 1].BackColor = Color.White;
                             FilledInFields++;
@@ -525,13 +525,13 @@ namespace sudokuTM
                 if (Directory == "pokracovani")
                 {
                     FileName = sr.ReadLine();
-                    string[] nactenycas = sr.ReadLine().Split(':');
-                    int inthodiny = Convert.ToInt32(nactenycas[0]);
-                    int intminuty = Convert.ToInt32(nactenycas[1]);
-                    int intsekundy = Convert.ToInt32(nactenycas[2]);
+                    string[] LoadedTime = sr.ReadLine().Split(':');
+                    int IntHours = Convert.ToInt32(LoadedTime[0]);
+                    int IntMinutes = Convert.ToInt32(LoadedTime[1]);
+                    int IntSeconds = Convert.ToInt32(LoadedTime[2]);
 
-                    double milisekundy = inthodiny * 360000 + intminuty * 60000 + intsekundy * 1000;
-                    TimeLapse = TimeSpan.FromMilliseconds(milisekundy);
+                    double Miliseconds = IntHours * 360000 + IntMinutes * 60000 + IntSeconds * 1000;
+                    TimeLapse = TimeSpan.FromMilliseconds(Miliseconds);
                     sr.Close();
                     File.Delete(SudokuLoading);
                 }
@@ -566,29 +566,29 @@ namespace sudokuTM
         private void ScoreStopwatch_Tick(object sender, EventArgs e)
         {
             if (TimeLapse != null)
-            { ts = StopWatch.Elapsed + TimeLapse; }
-            else { ts = StopWatch.Elapsed; }
-            string formatovanycas = String.Format("{0:00}:{1:00}:{2:00}", ts.Hours, ts.Minutes, ts.Seconds);
-            this.label1.Text = formatovanycas;
+            { TimeSpanHelpingVariable = StopWatch.Elapsed + TimeLapse; }
+            else { TimeSpanHelpingVariable = StopWatch.Elapsed; }
+            string FormatedTime = String.Format("{0:00}:{1:00}:{2:00}", TimeSpanHelpingVariable.Hours, TimeSpanHelpingVariable.Minutes, TimeSpanHelpingVariable.Seconds);
+            this.TimerLabel.Text = FormatedTime;
             
         }
 
         /// <summary>
-        /// Metoda nejprve změní adresář, ze kterého se hra bude načítat, poté zavolá samotné načtené sudoku v metodě LoadSudoku().
+        /// Metoda nejprve změní adresář, ze kterého se hra bude načítat, poté zavolá samotné načtené Sudoku v metodě LoadSudoku().
         /// </summary>
-        /// <param name="uroven">Určuje název složky, která se bude ukládat do parametru Directory.</param>
-        public void LoadDirectory(string uroven)
+        /// <param name="Level">Určuje název složky, která se bude ukládat do parametru Directory.</param>
+        public void LoadDirectory(string Level)
         {
-            if (uroven == "lehka")
+            if (Level == "lehka")
             {
                 Directory = "lehka";
 
             }
-            else if (uroven == "stredni")
+            else if (Level == "stredni")
             {
                 Directory = "stredni";
             }
-            else if (uroven == "tezka")
+            else if (Level == "tezka")
             {
                 Directory = "tezka";
             }
@@ -597,7 +597,7 @@ namespace sudokuTM
         }
 
         /// <summary>
-        /// Okno se samotnou hrou sudoku. Detekuje čísla stisknutá na klávesnici.
+        /// Okno se samotnou hrou Sudoku. Detekuje čísla stisknutá na klávesnici.
         /// </summary>
         public Sudoku()
         {
@@ -623,7 +623,7 @@ namespace sudokuTM
         }
 
         /// <summary>
-        /// Spustí se při kliknutí na jedno z 81 tlačítek v mřížce sudoku. Vybarví stejná čísla nebo zobrazí nabídku čísel, která je možno doplnit.
+        /// Spustí se při kliknutí na jedno z 81 tlačítek v mřížce Sudoku. Vybarví stejná čísla nebo zobrazí nabídku čísel, která je možno doplnit.
         /// </summary>
         /// <param name="sender">Obsahuje data o objektu, který událost vyvolal.</param>
         /// <param name="e">Obsahuje informace o události.</param>
@@ -641,17 +641,17 @@ namespace sudokuTM
 
 
         /// <summary>
-        /// Vyvolá se po stisknutí tlačítka "Vyhodnoť". Zkontroluje správnost vyplnění sudoku.
+        /// Vyvolá se po stisknutí tlačítka "Vyhodnoť". Zkontroluje správnost vyplnění Sudoku.
         /// </summary>
         /// <param name="sender">Obsahuje data o objektu, který událost vyvolal.</param>
         /// <param name="e">Obsahuje informace o události.</param>
-        private void Vyhodnot_Click(object sender, EventArgs e)
+        private void Evaluate_Click(object sender, EventArgs e)
         {
             EvaluateSudoku();
         }
 
         /// <summary>
-        /// Vyvolá se po stisknutí klávesy. Klávesy kromě numerických kláves 1-9 jsou ignorovány. Vyplní příslušné číslo do onačeného pole v mřížce.
+        /// Vyvolá se po stisknutí klávesy. Klávesy kromě numerických kláves 1-9 jsou ignorovány. Vyplní příslušné číslo do onačeného WordTypeForPole v mřížce.
         /// </summary>
         /// <param name="sender">Obsahuje data o objektu, který událost vyvolal.</param>
         /// <param name="e">Obsahuje informace o události.</param>
@@ -671,7 +671,7 @@ namespace sudokuTM
         }
 
         /// <summary>
-        /// Vyvolá se při klinutí na tlačítko "Pauza". Zastaví StopWatch, skryje mřížku sudoku a vytvoří nové tlačítko "Pokračovat", která působí opačně než tlačítko "Pauza".
+        /// Vyvolá se při klinutí na tlačítko "Pauza". Zastaví StopWatch, skryje mřížku Sudoku a vytvoří nové tlačítko "Pokračovat", která působí opačně než tlačítko "Pauza".
         /// </summary>
         /// <param name="sender">Obsahuje data o objektu, který událost vyvolal.</param>
         /// <param name="e">Obsahuje informace o události.</param>
@@ -681,30 +681,30 @@ namespace sudokuTM
             StopWatch.Stop();
             ScoreStopwatch.Stop();
 
-            Button pauza = new Button();
-            pauza.Width = 75;
-            pauza.Height = 23;
-            pauza.BackColor = Color.Beige;
-            pauza.Text = "Pokračovat";
-            pauza.Left = 452;
-            pauza.Top = 67;
+            Button ButtonContinue = new Button();
+            ButtonContinue.Width = 75;
+            ButtonContinue.Height = 23;
+            ButtonContinue.BackColor = Color.Beige;
+            ButtonContinue.Text = "Pokračovat";
+            ButtonContinue.Left = 452;
+            ButtonContinue.Top = 67;
 
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 9; j++)
                 {
                     this.Controls[i.ToString() + j.ToString()].Hide();
                 }
-            this.Controls.Add(pauza);
-            pauza.Click += new EventHandler(pauza_Click);
-            LPauza.Add(pauza);
+            this.Controls.Add(ButtonContinue);
+            ButtonContinue.Click += new EventHandler(Continue_Click);
+            ListOfPause.Add(ButtonContinue);
         }
 
         /// <summary>
-        /// Vyvolá se po kliknutí na tlačítko "Pokračovat", které bylo vygenerováno metodou pause_Click. Zobrazí sudoku, znovu spustí čas a vymaže tlačítko "Pokračovat".
+        /// Vyvolá se po kliknutí na tlačítko "Pokračovat", které bylo vygenerováno metodou pause_Click. Zobrazí Sudoku, znovu spustí čas a vymaže tlačítko "Pokračovat".
         /// </summary>
         /// <param name="sender">Obsahuje data o objektu, který událost vyvolal.</param>
         /// <param name="e">Obsahuje informace o události.</param>
-        private void pauza_Click(object sender, EventArgs e)
+        private void Continue_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 9; j++)
@@ -712,13 +712,13 @@ namespace sudokuTM
                     this.Controls[i.ToString() + j.ToString()].Show();
                 }
 
-            this.Controls.Remove(pauza);
-            foreach (Button button in LPauza)
+            this.Controls.Remove(PauseButton);
+            foreach (Button button in ListOfPause)
             {
 
                 button.Dispose();
             }
-            LPauza.Clear();
+            ListOfPause.Clear();
             StopWatch.Start();
             ScoreStopwatch.Start();
             
@@ -729,7 +729,7 @@ namespace sudokuTM
         /// </summary>
         /// <param name="sender">Obsahuje data o objektu, který událost vyvolal.</param>
         /// <param name="e">Obsahuje informace o události.</param>
-        public void save_Click(object sender, EventArgs e)
+        public void Save_Click(object sender, EventArgs e)
         {
             StreamWriter sw = new StreamWriter("./lehka/pokracovani.txt");
             for (int i = 0; i < 9; i++)
@@ -746,10 +746,10 @@ namespace sudokuTM
             }
             sw.WriteLine(FileName);
             if (TimeLapse != null)
-            { ts = StopWatch.Elapsed + TimeLapse; }
-            else { ts = StopWatch.Elapsed; }
-            string formatovanycas = String.Format("{0:00}:{1:00}:{2:00}", ts.Hours, ts.Minutes, ts.Seconds);
-            sw.WriteLine(formatovanycas);
+            { TimeSpanHelpingVariable = StopWatch.Elapsed + TimeLapse; }
+            else { TimeSpanHelpingVariable = StopWatch.Elapsed; }
+            string FormatedTime = String.Format("{0:00}:{1:00}:{2:00}", TimeSpanHelpingVariable.Hours, TimeSpanHelpingVariable.Minutes, TimeSpanHelpingVariable.Seconds);
+            sw.WriteLine(FormatedTime);
             sw.Close();
             MessageBox.Show("Hra uložena.");
         }
@@ -763,11 +763,11 @@ namespace sudokuTM
         {
             if (!Leaving)
             {
-                WantToSave ask = new WantToSave("Odcházíte?", "Ano", "Ne", "Přejete si před odchodem uložit hru?");
-                ask.ShowDialog();
-                if (ask.YesSave == true)
+                WantToSave Ask = new WantToSave("Odcházíte?", "Ano", "Ne", "Přejete si před odchodem uložit hru?");
+                Ask.ShowDialog();
+                if (Ask.YesSave == true)
                 {
-                    save_Click(sender, e);
+                    Save_Click(sender, e);
 
                 }
                 Leaving = true;
@@ -777,31 +777,31 @@ namespace sudokuTM
         }
 
         /// <summary>
-        /// Vytvoří tlačítko pro mřížku sudoku.
+        /// Vytvoří tlačítko pro mřížku Sudoku.
         /// </summary>
-        /// <param name="name">Název pro obsluhu tlačítka</param>
-        /// <param name="width">Požadovaná velikost tlačítka. Výška a šířka bude stejná.</param>
-        /// <param name="left">Odsazení od levého okraje.</param>
-        /// <param name="top">Odsazení od horního okraje.</param>
-        /// <param name="text">Vyplnění tlačítka.</param>
+        /// <param name="Name">Název pro obsluhu tlačítka</param>
+        /// <param name="Width">Požadovaná velikost tlačítka. Výška a šířka bude stejná.</param>
+        /// <param name="Left">Odsazení od levého okraje.</param>
+        /// <param name="Top">Odsazení od horního okraje.</param>
+        /// <param name="Text">Vyplnění tlačítka.</param>
         /// <param name="i">Pořadí řádky.</param>
         /// <param name="j">Pořadí sloupce.</param>
         /// <returns>Vrací hotové tlačítko, které je schopné reagovat na příkazy uživatele.</returns>
-        public Button CreateNewButton(string name, int width, int left, int top, string text, int i, int j)
+        public Button CreateNewButton(string Name, int Width, int Left, int Top, string Text, int i, int j)
         {
-            Button newbutton = new Button();
-            newbutton.Name = name;
-            newbutton.Width = width;
-            newbutton.Height = width;
-            newbutton.Left = left;
-            newbutton.Top = top;
-            newbutton.Text = text;
-            newbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            newbutton.TabIndex = i * j - 1;
-            newbutton.UseVisualStyleBackColor = true;
-            newbutton.Click += new System.EventHandler(this.Cell_Click);
-            Controls.Add(newbutton);
-            return newbutton;
+            Button Newbutton = new Button();
+            Newbutton.Name = Name;
+            Newbutton.Width = Width;
+            Newbutton.Height = Width;
+            Newbutton.Left = Left;
+            Newbutton.Top = Top;
+            Newbutton.Text = Text;
+            Newbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            Newbutton.TabIndex = i * j - 1;
+            Newbutton.UseVisualStyleBackColor = true;
+            Newbutton.Click += new System.EventHandler(this.Cell_Click);
+            Controls.Add(Newbutton);
+            return Newbutton;
 
         }
 
