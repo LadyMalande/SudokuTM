@@ -34,7 +34,7 @@
             this.Stredni = new System.Windows.Forms.Button();
             this.Konec = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.Pokracovat = new System.Windows.Forms.Button();
+            this.Continue = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             Tezka = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -107,16 +107,16 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Vyber úroveň obtížnosti:";
             // 
-            // Pokracovat
+            // Continue
             // 
-            this.Pokracovat.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.Pokracovat.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Pokracovat.Location = new System.Drawing.Point(46, 106);
-            this.Pokracovat.Name = "Pokracovat";
-            this.Pokracovat.Size = new System.Drawing.Size(180, 32);
-            this.Pokracovat.TabIndex = 7;
-            this.Pokracovat.Text = "Pokračovat";
-            this.Pokracovat.UseVisualStyleBackColor = false;
+            this.Continue.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.Continue.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Continue.Location = new System.Drawing.Point(46, 106);
+            this.Continue.Name = "Continue";
+            this.Continue.Size = new System.Drawing.Size(180, 32);
+            this.Continue.TabIndex = 7;
+            this.Continue.Text = "Pokračovat";
+            this.Continue.UseVisualStyleBackColor = false;
             // 
             // label3
             // 
@@ -126,23 +126,23 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(262, 17);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Tereza Miklóšová verze 20180803.1956";
+            this.label3.Text = "Tereza Miklóšová verze 20180916.1751";
             // 
-            // Form1
+            // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Moccasin;
             this.ClientSize = new System.Drawing.Size(282, 453);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.Pokracovat);
+            this.Controls.Add(this.Continue);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.Konec);
             this.Controls.Add(Tezka);
             this.Controls.Add(this.Stredni);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.Lehka);
-            this.Name = "Form1";
+            this.Name = "MainMenu";
             this.Text = "Menu";
             this.Load += new System.EventHandler(this.MainMenu_Load);
             this.ResumeLayout(false);
@@ -152,7 +152,7 @@
 
         #endregion
         /// <summary>
-        /// Po kliknutí načte lehké sudoku.
+        /// Po kliknutí načte lehké Sudoku.
         /// </summary>
         private System.Windows.Forms.Button Lehka;
         /// <summary>
@@ -160,7 +160,7 @@
         /// </summary>
         private System.Windows.Forms.Label label1;
         /// <summary>
-        /// Po kliknutí načte středně těžké sudoku.
+        /// Po kliknutí načte středně těžké Sudoku.
         /// </summary>
         private System.Windows.Forms.Button Stredni;
         /// <summary>
@@ -174,7 +174,7 @@
         /// <summary>
         /// Objeví se pouze v případě, že uživatel má ve složce lehka uloženou hru. Načte pokračování uložené hry.
         /// </summary>
-        private System.Windows.Forms.Button Pokracovat;
+        private System.Windows.Forms.Button Continue;
         /// <summary>
         /// Obsahuje informace o verzi projektu.
         /// </summary>
