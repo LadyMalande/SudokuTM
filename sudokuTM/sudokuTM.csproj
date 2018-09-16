@@ -152,7 +152,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lehka\lehka0.txt" />
+   
     <Content Include="lehka\lehka1.txt" />
     <Content Include="lehka\lehka2.txt" />
     <Content Include="lehka\lehka3.txt" />
