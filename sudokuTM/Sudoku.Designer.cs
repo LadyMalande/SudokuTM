@@ -24,7 +24,7 @@ namespace sudokuTM
 
         #region Windows Form Designer generated code
         
-
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -37,8 +37,8 @@ namespace sudokuTM
             this.TimerLabel = new System.Windows.Forms.Label();
             this.pause = new System.Windows.Forms.Button();
             this.Save = new System.Windows.Forms.Button();
-            this.HighlightSameNumbersCheckBox = new System.Windows.Forms.CheckBox();
-            this.DoNotHighlightDumbNumbersCheckBox = new System.Windows.Forms.CheckBox();
+            HighlightSameNumbersCheckBox = new System.Windows.Forms.CheckBox();
+            DoHighlightGoodNumbersCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // Vyhodnot
@@ -83,35 +83,35 @@ namespace sudokuTM
             // 
             // HighlightSameNumbersCheckBox
             // 
-            this.HighlightSameNumbersCheckBox.AutoSize = true;
-            this.HighlightSameNumbersCheckBox.Checked = true;
-            this.HighlightSameNumbersCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.HighlightSameNumbersCheckBox.Location = new System.Drawing.Point(502, 115);
-            this.HighlightSameNumbersCheckBox.Name = "HighlightSameNumbersCheckBox";
-            this.HighlightSameNumbersCheckBox.Size = new System.Drawing.Size(190, 21);
-            this.HighlightSameNumbersCheckBox.TabIndex = 90;
-            this.HighlightSameNumbersCheckBox.Text = "Podbarvení stejných čísel";
-            this.HighlightSameNumbersCheckBox.UseVisualStyleBackColor = true;
+            HighlightSameNumbersCheckBox.AutoSize = true;
+            HighlightSameNumbersCheckBox.Checked = true;
+            HighlightSameNumbersCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            HighlightSameNumbersCheckBox.Location = new System.Drawing.Point(502, 115);
+            HighlightSameNumbersCheckBox.Name = "HighlightSameNumbersCheckBox";
+            HighlightSameNumbersCheckBox.Size = new System.Drawing.Size(190, 21);
+            HighlightSameNumbersCheckBox.TabIndex = 90;
+            HighlightSameNumbersCheckBox.Text = "Podbarvení stejných čísel";
+            HighlightSameNumbersCheckBox.UseVisualStyleBackColor = true;
             // 
-            // DoNotHighlightDumbNumbersCheckBox
+            // DoHighlightGoodNumbersCheckBox
             // 
-            this.DoNotHighlightDumbNumbersCheckBox.AutoSize = true;
-            this.DoNotHighlightDumbNumbersCheckBox.Checked = true;
-            this.DoNotHighlightDumbNumbersCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.DoNotHighlightDumbNumbersCheckBox.Location = new System.Drawing.Point(502, 139);
-            this.DoNotHighlightDumbNumbersCheckBox.Name = "DoNotHighlightDumbNumbersCheckBox";
-            this.DoNotHighlightDumbNumbersCheckBox.Size = new System.Drawing.Size(289, 21);
-            this.DoNotHighlightDumbNumbersCheckBox.TabIndex = 91;
-            this.DoNotHighlightDumbNumbersCheckBox.Text = "Vyřazení nehodících se čísel z klávesnice";
-            this.DoNotHighlightDumbNumbersCheckBox.UseVisualStyleBackColor = true;
+            DoHighlightGoodNumbersCheckBox.AutoSize = true;
+            DoHighlightGoodNumbersCheckBox.Checked = true;
+            DoHighlightGoodNumbersCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            DoHighlightGoodNumbersCheckBox.Location = new System.Drawing.Point(502, 139);
+            DoHighlightGoodNumbersCheckBox.Name = "DoHighlightGoodNumbersCheckBox";
+            DoHighlightGoodNumbersCheckBox.Size = new System.Drawing.Size(289, 21);
+            DoHighlightGoodNumbersCheckBox.TabIndex = 91;
+            DoHighlightGoodNumbersCheckBox.Text = "Vyřazení nehodících se čísel z klávesnice";
+            DoHighlightGoodNumbersCheckBox.UseVisualStyleBackColor = true;
             // 
             // Sudoku
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(812, 511);
-            this.Controls.Add(this.DoNotHighlightDumbNumbersCheckBox);
-            this.Controls.Add(this.HighlightSameNumbersCheckBox);
+            this.Controls.Add(DoHighlightGoodNumbersCheckBox);
+            this.Controls.Add(HighlightSameNumbersCheckBox);
             this.Controls.Add(this.Save);
             this.Controls.Add(this.pause);
             this.Controls.Add(this.TimerLabel);
@@ -151,10 +151,10 @@ namespace sudokuTM
         /// <summary>
         /// Umožňuje vypnutí/zapnutí zvýrazňování stejných čísel v mřížce.
         /// </summary>
-        private System.Windows.Forms.CheckBox HighlightSameNumbersCheckBox;
+        public static System.Windows.Forms.CheckBox HighlightSameNumbersCheckBox;
         /// <summary>
         /// Umožňuje vypnutí/zapnutí rádce v nabídce čísel.
         /// </summary>
-        private System.Windows.Forms.CheckBox DoNotHighlightDumbNumbersCheckBox;
+        public static System.Windows.Forms.CheckBox DoHighlightGoodNumbersCheckBox;
     }
 }

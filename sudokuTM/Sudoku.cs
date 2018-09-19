@@ -20,7 +20,7 @@ namespace sudokuTM
         /// <summary>
         /// Označuje Button z mřížky Sudoku, který má právě uživatel označený.
         /// </summary>
-        public Button WhereIWantToFillInNumber;
+        public static GridButton WhereIWantToFillInNumber;
         /// <summary>
         /// Button PauseButton slouží po kliknutí k pozastavení hry.
         /// </summary>
@@ -28,7 +28,7 @@ namespace sudokuTM
         /// <summary>
         /// Seznam tlačítek ListOfNumbers v sobě zahrnuje tlačítka, která se generují dynamicky podle zvoleného WordTypeForPole, kam chce uživatel číslo doplnit.
         /// </summary>
-        public List<Button> ListOfNumbers = new List<Button>();
+        public static List<Button> ListOfNumbers = new List<Button>();
         /// <summary>
         /// Pomocný seznam na předání tlačítka do dalších metod.
         /// </summary>
@@ -36,7 +36,7 @@ namespace sudokuTM
         /// <summary>
         /// Číslo označující počet vyplněných políček.
         /// </summary>
-        public int FilledInFields = 0;
+        public static int FilledInFields = 0;
         /// <summary>
         /// String, který je generován z úrovně obtížnosti a náhodného čísla. Označuje soubor, ze kterého se bude načítat Sudoku.
         /// </summary>
@@ -53,7 +53,7 @@ namespace sudokuTM
         /// <summary>
         /// Pole obsahující 81 tlačítek potřebných k vyplnění Sudoku.
         /// </summary>
-        public Button[,] SudokuGrid = new Button[9, 9];
+        public GridButton[,] SudokuGrid = new GridButton[9, 9];
         /// <summary>
         /// Měří dobu, za kterou uživatel Sudoku vyluštil.
         /// </summary>
@@ -133,7 +133,7 @@ namespace sudokuTM
         /// <param name="r">Dolní hranice řádku</param>
         /// <param name="s">Dolní hranice sloupce</param>
         /// <returns></returns>
-        public bool IsNumberInTheSameCell(int number, int r, int s)
+       /* public static bool IsNumberInTheSameCell(int number, int r, int s)
         {
             for (int Row = r; Row < r + 3; Row++)
             {
@@ -146,21 +146,31 @@ namespace sudokuTM
                 }
             }
             return true;
-        }
+        }*/
         /// <summary>
         /// Kontroluje, zda je na vybrané tlačítko možno doplnit právě zkoumané číslo. Zkoumá se pouze základní návaznost na ostatní čísla tj. unikátnost v řádku, sloupci a buňce.
         /// </summary>
         /// <param name="TestedNumber">Zkoumané číslo (1-9)</param>
         /// <param name="ButtonName">Označení buňky, u které se zkoumá dostupnost</param>
         /// <returns>True - pokud se číslo nevyskytuje ani ve sloupci, řádku, buňce. False - pokud se číslo vyskytuje alespoň ve sloupci, řádku nebo buňce.</returns>
-        public bool CanBeFilledIn(int TestedNumber, Button ButtonName)
-        {
-
-            char chari = ButtonName.Name[0];
-            char charj = ButtonName.Name[1];
-
-
-            for (int Column = 0; Column < 9; Column++)
+        public static bool CanBeFilledIn(int TestedNumber, GridButton ButtonName)
+        { 
+            foreach(var GridButton in GridButton.ListOfGridButtons)
+            {
+                if((WhereIWantToFillInNumber.Row == GridButton.Row)&&(GridButton.Text == TestedNumber.ToString()))
+                {
+                    return false;
+                }
+                if ((WhereIWantToFillInNumber.Column == GridButton.Column) && (GridButton.Text == TestedNumber.ToString()))
+                {
+                    return false;
+                }
+                if((WhereIWantToFillInNumber.Cell == GridButton.Cell) && (GridButton.Text == TestedNumber.ToString()))
+                {
+                    return false;
+                }
+            }
+           /* for (int Column = 1; Column < 10; Column++)
             {
 
                 if (this.Controls[chari.ToString() + Column.ToString()].Text == TestedNumber.ToString())
@@ -179,9 +189,9 @@ namespace sudokuTM
             int i = (int)Char.GetNumericValue(chari);
             int j = (int)Char.GetNumericValue(charj);
 
-
-
-            if (i > -1 && i < 3)
+            */
+            
+           /* if (i > -1 && i < 3)
             {
                 if (j > -1 && j < 3)
                 {
@@ -226,7 +236,7 @@ namespace sudokuTM
                 {
                     if (!(IsNumberInTheSameCell(TestedNumber, 6, 6))) return false;
                 }
-            }
+            } */
             return true;
         }
         /// <summary>
@@ -234,7 +244,7 @@ namespace sudokuTM
         /// </summary>
         /// <param name="sender">Obsahuje data o objektu, který událost vyvolal.</param>
         /// <param name="e">Obsahuje informace o události.</param>
-        private void NumberMenuButton_Click(object sender, EventArgs e)
+        private static void NumberMenuButton_Click(object sender, EventArgs e)
 
         {
             Button button = sender as Button;
@@ -261,42 +271,42 @@ namespace sudokuTM
         /// <param name="Left">O kolik pixelů má být tlačítko odsazeno zleva</param>
         /// <param name="Top">O kolik pixelů má být tlačítko odsazeno shora</param>
         /// <param name="Colour">Jakou barvu má tlačítko mít</param>
-        public void CreateNewButton(string i, int Left, int Top, Color Colour)
+        public static void CreateNewButton(string i, int Left, int Top, Color Colour)
         {
-            Button Nabidka = new Button();
+            Button ListOfNumbersButton = new Button();
             if (i == "Vymaž")
             {
-                Nabidka.Height = 40;
+                ListOfNumbersButton.Height = 40;
 
-                Nabidka.Width = 120;
+                ListOfNumbersButton.Width = 120;
             }
             else
             {
-                Nabidka.Height = 40;
+                ListOfNumbersButton.Height = 40;
 
-                Nabidka.Width = 40;
+                ListOfNumbersButton.Width = 40;
             }
-            Nabidka.BackColor = Colour;
+            ListOfNumbersButton.BackColor = Colour;
 
-            Nabidka.ForeColor = Color.Black;
+            ListOfNumbersButton.ForeColor = Color.Black;
 
-            Nabidka.Location = new Point(Left, Top);
+            ListOfNumbersButton.Location = new Point(Left, Top);
 
-            Nabidka.Text = i;
+            ListOfNumbersButton.Text = i;
 
-            Nabidka.Name = i;
+            ListOfNumbersButton.Name = i;
 
-            Nabidka.Font = new Font("Tahoma", 16);
-            Nabidka.Click += new EventHandler(NumberMenuButton_Click);
-
-            ListOfNumbers.Add(Nabidka);
+            ListOfNumbersButton.Font = new Font("Tahoma", 16);
+            ListOfNumbersButton.Click += new EventHandler(NumberMenuButton_Click);
+            ListOfNumbersButton.Show();
+            ListOfNumbers.Add(ListOfNumbersButton);
         }
 
         /// <summary>
         /// Vytvoří nabídku čísel pro doplnění i s tlačítkem "Vymaž".
         /// </summary>
         /// <param name="ButtonName">Pole, které je označené v Sudoku mřížce.</param>
-        public void ShowNumberMenu(Button ButtonName)
+       /* public static void ShowNumberMenu(GridButton ButtonName)
         {
             MainMenu.AlreadyLoaded = false;
             foreach (Button button in ListOfNumbers)
@@ -321,7 +331,7 @@ namespace sudokuTM
                         else if (40 % i == 0 && i != 4 && i != 1) { Column = 2; }
                         else { Column = 1; }
 
-                    if (this.DoHighlightGoodNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton(i.ToString(), 360 + Column * 50, 100 + Row * 50, Color.LightGreen);
+                    if (DoHighlightGoodNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton(i.ToString(), 360 + Column * 50, 100 + Row * 50, Color.LightGreen);
                         else CreateNewButton(i.ToString(), 360 + Column * 50, 100 + Row * 50, Color.LightSlateGray);
                                            
                     CreateNewButton("Vymaž", 420, 300, Color.LightSlateGray);
@@ -336,6 +346,7 @@ namespace sudokuTM
             ppap.Dispose();
             g.Dispose();
         }
+        */
         /// <summary>
         /// Vrací pravdivostní hodnotu, zda jsou dvě tlačítka ve stejné buňce.
         /// </summary>
@@ -354,7 +365,7 @@ namespace sudokuTM
             }
             else return false;
         }
-
+        /*
         /// <summary>
         /// Po kliknutí na již vyplněné WordTypeForPole zvýrazní zeleně všechna ostatní stejná čísla, která jsou umístěna správně, a červeně zvýrazní čísla, která jsou umístěna špatně vzhledem ke sloupci, řádku nebo buňce.
         /// </summary>
@@ -386,7 +397,6 @@ namespace sudokuTM
                     {
                         if (this.Controls[i.ToString() + j.ToString()].Text != " ")
                         {
-
 
                             if (this.Controls[i.ToString() + j.ToString()].Text == ButtonName.Text)
                             {
@@ -439,6 +449,7 @@ namespace sudokuTM
                     }
             }
         }
+        */
         /// <summary>
         /// Určuje složku, ze které se bude Sudoku načítat.
         /// </summary>
@@ -480,7 +491,7 @@ namespace sudokuTM
                         }
                         else if (Numbers[2 * j - 1] == "0")
                         {
-                            SudokuGrid[i - 1,j -1 ].Text = " ";
+                            SudokuGrid[i - 1, j - 1].Text = " ";
                             SudokuGrid[i - 1, j - 1].ForeColor = Color.MidnightBlue;
                             SudokuGrid[i - 1, j - 1].BackColor = Color.White;
                         }
@@ -567,6 +578,21 @@ namespace sudokuTM
             else Directory = "pokracovani";
             LoadSudoku();
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <param name="Row"></param>
+        /// <param name="Column"></param>
+        /// <param name="Width"></param>
+        /// <param name="Left"></param>
+        /// <param name="Top"></param>
+        /// <returns></returns>
+        public GridButton CreateGridButton(string Name, int Row, int Column, int Width, int Left, int Top)
+        {
+            GridButton NewGridButton = new GridButton(Name, Row, Column, Width, Left, Top);
+            return NewGridButton;
+        } 
 
         /// <summary>
         /// Okno se samotnou hrou Sudoku. Detekuje čísla stisknutá na klávesnici.
@@ -574,7 +600,7 @@ namespace sudokuTM
         public Sudoku()
         {
             InitializeComponent();
-
+            /*
             for (int i = 1; i < 10; i++)
             {
                 for (int j = 1; j < 10; j++)
@@ -589,11 +615,34 @@ namespace sudokuTM
                     SudokuGrid[i - 1, j - 1].Show();
                 }
             }
+            */
+           
+            for (int i = 1; i < 10; i++)
+            {
+                for (int j = 1; j < 10; j++)
+                {
+                    int jd = 0, id = 0;
+                    if (i >= 4) { id = 4; }
+                    if (i >= 7) { id = 8; }
+                    if (j >= 4) { jd = 4; }
+                    if (j >= 7) { jd = 8; }
+                    string NameOfButtonstring = (i).ToString() + (j).ToString();
+                    GridButton NewGridButton = CreateGridButton(NameOfButtonstring, i, j, 35, j * 35 + jd, i * 35 + id);
+                    SudokuGrid[i - 1, j - 1] = NewGridButton;
+                    Controls.Add(NewGridButton);
+                    SudokuGrid[i - 1, j - 1].Show();
+
+                    
+                    GridButton.ListOfGridButtons.Add(NewGridButton);
+                   
+                }
+            }
+            
 
             KeyPreview = true;
 
         }
-
+        /*
         /// <summary>
         /// Spustí se při kliknutí na jedno z 81 tlačítek v mřížce Sudoku. Vybarví stejná čísla nebo zobrazí nabídku čísel, která je možno doplnit.
         /// </summary>
@@ -603,14 +652,14 @@ namespace sudokuTM
         {
             Button button = sender as Button;
 
-            
+
             HighlightSameNumbers(button);
             ShowNumberMenu(button);
 
 
         }
 
-
+    */
 
         /// <summary>
         /// Vyvolá se po stisknutí tlačítka "Vyhodnoť". Zkontroluje správnost vyplnění Sudoku.
@@ -627,7 +676,7 @@ namespace sudokuTM
         /// </summary>
         /// <param name="sender">Obsahuje data o objektu, který událost vyvolal.</param>
         /// <param name="e">Obsahuje informace o události.</param>
-        private void Sudoku_KeyPress(object sender, KeyPressEventArgs e)
+       private void Sudoku_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (WhereIWantToFillInNumber != null)
                 if (Char.IsDigit(e.KeyChar) && (e.KeyChar.ToString() != "0"))
@@ -759,7 +808,7 @@ namespace sudokuTM
         /// <param name="i">Pořadí řádky.</param>
         /// <param name="j">Pořadí sloupce.</param>
         /// <returns>Vrací hotové tlačítko, které je schopné reagovat na příkazy uživatele.</returns>
-        public Button CreateNewButton(string Name, int Width, int Left, int Top, string Text, int i, int j)
+        public  Button CreateNewButton(string Name, int Width, int Left, int Top, string Text, int i, int j)
         {
             Button Newbutton = new Button();
             Newbutton.Name = Name;
@@ -771,7 +820,7 @@ namespace sudokuTM
             Newbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             Newbutton.TabIndex = i * j - 1;
             Newbutton.UseVisualStyleBackColor = true;
-            Newbutton.Click += new System.EventHandler(this.Cell_Click);
+          
             Controls.Add(Newbutton);
             return Newbutton;
 

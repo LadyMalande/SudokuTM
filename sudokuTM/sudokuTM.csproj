@@ -80,6 +80,9 @@
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="GridButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -152,7 +155,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-   
     <Content Include="lehka\lehka1.txt" />
     <Content Include="lehka\lehka2.txt" />
     <Content Include="lehka\lehka3.txt" />
