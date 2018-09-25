@@ -126,7 +126,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(262, 17);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Tereza Miklóšová verze 20180916.1751";
+            this.label3.Text = "Tereza Miklóšová verze 20180925.0952";
             // 
             // MainMenu
             // 

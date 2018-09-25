@@ -464,7 +464,7 @@ namespace sudokuTM
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 9; j++)
                 {
-                    this.Controls[i.ToString() + j.ToString()].Hide();
+                    SudokuGrid[i,j].Hide();
                 }
             this.Controls.Add(ButtonContinue);
             ButtonContinue.Click += new EventHandler(Continue_Click);
@@ -481,7 +481,7 @@ namespace sudokuTM
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 9; j++)
                 {
-                    this.Controls[i.ToString() + j.ToString()].Show();
+                    SudokuGrid[i,j].Show();
                 }
 
             this.Controls.Remove(PauseButton);
@@ -508,10 +508,10 @@ namespace sudokuTM
             {
                 for (int j = 0; j < 9; j++)
                 {
-                    if (this.Controls[i.ToString() + j.ToString()].ForeColor == Color.Black)
-                        sw.Write("{0} 1 ", this.Controls[i.ToString() + j.ToString()].Text);
-                    else if (this.Controls[i.ToString() + j.ToString()].ForeColor == Color.MidnightBlue && this.Controls[i.ToString() + j.ToString()].Text != " ")
-                        sw.Write("{0} 2 ", this.Controls[i.ToString() + j.ToString()].Text);
+                    if (SudokuGrid[i, j ].ForeColor == Color.Black)
+                        sw.Write("{0} 1 ", SudokuGrid[i, j].Text);
+                    else if (SudokuGrid[i, j].ForeColor == Color.MidnightBlue && SudokuGrid[i, j].Text != " ")
+                        sw.Write("{0} 2 ", SudokuGrid[i, j].Text);
                     else sw.Write("- 0 ");
                 }
                 sw.WriteLine();
