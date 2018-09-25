@@ -20,10 +20,12 @@ namespace sudokuTM
         /// </summary>
         public static bool AlreadyLoaded;
 
+        
+
         /// <summary>
         /// Form3 je okno samotné hry Sudoku.
         /// </summary>
-        static public Sudoku Sudoku;
+        public static Sudoku Sudoku;
         /// <summary>
         /// Při zapnutí souboru SudokuTM.exe se spustí právě Form1. Ze základu je parametr AlreadyLoaded nastaven na false, protože tlačítko "Pokračovat" nemohlo být použito.
         /// </summary>
@@ -128,7 +130,7 @@ namespace sudokuTM
         /// <param name="e">Obsahuje informace o události.</param>
         private void Easy_Click(object sender, EventArgs e)
         {
-            Sudoku = new Sudoku();
+            Sudoku = new Sudoku();          
             Sudoku.LoadDirectory("lehka");            
             Sudoku.Text = "Sudoku lehké";
             Sudoku.Show();

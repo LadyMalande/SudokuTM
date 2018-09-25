@@ -124,7 +124,7 @@ namespace sudokuTM
             MainMenu.AlreadyLoaded = false;
             foreach (Button button in Sudoku.ListOfNumbers)
             {
-                Controls.Remove(button);
+                MainMenu.Sudoku.Controls.Remove(button);
             }
             Sudoku.ListOfNumbers.Clear();
             //Graphics g = CreateGraphics();
@@ -147,14 +147,14 @@ namespace sudokuTM
                     if (Sudoku.DoHighlightGoodNumbersCheckBox.Checked == true && Sudoku.CanBeFilledIn(i, ButtonName)) Sudoku.CreateNewButton(i.ToString(), 360 + Column * 50, 100 + Row * 50, Color.LightGreen);
                     else Sudoku.CreateNewButton(i.ToString(), 360 + Column * 50, 100 + Row * 50, Color.LightSlateGray);
 
-                   
+                    Sudoku.CreateNewButton("Vymaž", 420, 300, Color.LightSlateGray);
                 }
-                Sudoku.CreateNewButton("Vymaž", 420, 300, Color.LightSlateGray);
+                
             }
 
             foreach (Button button in Sudoku.ListOfNumbers)
             {
-                Controls.Add(button);
+                MainMenu.Sudoku.Controls.Add(button);
             }
 
             //ppap.Dispose();
