@@ -321,7 +321,7 @@ namespace sudokuTM
                         else if (40 % i == 0 && i != 4 && i != 1) { Column = 2; }
                         else { Column = 1; }
 
-                    if (this.DoHighlightGoodNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton(i.ToString(), 360 + Column * 50, 100 + Row * 50, Color.LightGreen);
+                    if (this.DoNotHighlightDumbNumbersCheckBox.Checked == true && CanBeFilledIn(i, ButtonName)) CreateNewButton(i.ToString(), 360 + Column * 50, 100 + Row * 50, Color.LightGreen);
                         else CreateNewButton(i.ToString(), 360 + Column * 50, 100 + Row * 50, Color.LightSlateGray);
                                            
                     CreateNewButton("Vymaž", 420, 300, Color.LightSlateGray);
