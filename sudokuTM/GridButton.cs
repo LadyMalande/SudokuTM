@@ -10,7 +10,7 @@ namespace sudokuTM
 {
    
     /// <summary>
-    /// 
+    /// Třída pro tlačítka tvořící sudoku mřížku. Obsahuje nezbytné parametry pro snadnou práci v metodách zkoumající kolize čísel, vyhodnocování, nápovědu.
     /// </summary>
     public class GridButton : Button
     {
@@ -22,34 +22,32 @@ namespace sudokuTM
             // 
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.GridButton_KeyPress);
         }
-        
-        
+             
         /// <summary>
-        /// 
+        /// Seznam obsahující všechna tlačítka této třídy. Používán pro projíždění čísel pomocí struktury foreach.
         /// </summary>
         public static List<GridButton> ListOfGridButtons = new List<GridButton>();
-
-        public int Row, Column, Cell;
+        
         /// <summary>
-        /// 
+        /// Parametry udávající řádek tlačítka (Row), sloupec tlačítka (Column) a příslušnou jednu buňku z devíti, ve které tlačítko leží (Cell).
         /// </summary>
-        /// <param name="Row1"></param>
-        /// <param name="Column1"></param>
-        /// <param name="Row2"></param>
-        /// <param name="Column2"></param>
-        /// <param name="RowLowerBound"></param>
-        /// <param name="ColumnLowerBound"></param>
+        public int Row, Column, Cell;     
+        
+        /// <summary>
+        /// Kontroluje, zda jsou dvě tlačítka ve stejné buňce.
+        /// </summary>
+        /// <param name="Cell1">Buňka prvního tlačítka.</param>
+        /// <param name="Cell2">Buňka druhého tlačítka.</param>
         /// <returns></returns>
-        public bool IsInTheSameCell(int Row1, int Column1, int Row2, int Column2, int RowLowerBound, int ColumnLowerBound)
+        public bool IsInTheSameCell(int Cell1, int Cell2)
         {
-            if ((Row1 >= RowLowerBound) && (Row1 < RowLowerBound + 3) && (RowLowerBound <= Row2) && (Row2 < RowLowerBound + 3) && (Column1 >= ColumnLowerBound) && (Column1 < ColumnLowerBound + 3) && (ColumnLowerBound <= Column2) && (Column2 < ColumnLowerBound + 3))
+            if (Cell1 == Cell2)
             {
                 return true;
             }
             else return false;
-            
-        }
 
+        }
         /// <summary>
         /// Po kliknutí na již vyplněné WordTypeForPole zvýrazní zeleně všechna ostatní stejná čísla, která jsou umístěna správně, a červeně zvýrazní čísla, která jsou umístěna špatně vzhledem ke sloupci, řádku nebo buňce.
         /// </summary>
@@ -109,22 +107,18 @@ namespace sudokuTM
                                         IsInConflict = true;
                                     }
                                 }
-                                else if (IsInTheSameCell(Button1.Row, Button1.Column, Button2.Row, Button2.Column, 1, 1)) { Button1.BackColor = Color.Red; Button2.BackColor = Color.Red; IsInConflict = true; }
-                                else if (IsInTheSameCell(Button1.Row, Button1.Column, Button2.Row, Button2.Column, 1, 4)) { Button1.BackColor = Color.Red; Button2.BackColor = Color.Red; IsInConflict = true; }
-                                else if (IsInTheSameCell(Button1.Row, Button1.Column, Button2.Row, Button2.Column, 1, 7)) { Button1.BackColor = Color.Red; Button2.BackColor = Color.Red; IsInConflict = true; }
-                                else if (IsInTheSameCell(Button1.Row, Button1.Column, Button2.Row, Button2.Column, 4, 1)) { Button1.BackColor = Color.Red; Button2.BackColor = Color.Red; IsInConflict = true; }
-                                else if (IsInTheSameCell(Button1.Row, Button1.Column, Button2.Row, Button2.Column, 4, 4)) { Button1.BackColor = Color.Red; Button2.BackColor = Color.Red; IsInConflict = true; }
-                                else if (IsInTheSameCell(Button1.Row, Button1.Column, Button2.Row, Button2.Column, 4, 7)) { Button1.BackColor = Color.Red; Button2.BackColor = Color.Red; IsInConflict = true; }
-                                else if (IsInTheSameCell(Button1.Row, Button1.Column, Button2.Row, Button2.Column, 7, 1)) { Button1.BackColor = Color.Red; Button2.BackColor = Color.Red; IsInConflict = true; }
-                                else if (IsInTheSameCell(Button1.Row, Button1.Column, Button2.Row, Button2.Column, 7, 4)) { Button1.BackColor = Color.Red; Button2.BackColor = Color.Red; IsInConflict = true; }
-                                else if (IsInTheSameCell(Button1.Row, Button1.Column, Button2.Row, Button2.Column, 7, 7)) { Button1.BackColor = Color.Red; Button2.BackColor = Color.Red; IsInConflict = true; }
+                                
+                                else if (IsInTheSameCell(Button1.Cell, Button2.Cell)) { Button1.BackColor = Color.Red; Button2.BackColor = Color.Red; IsInConflict = true; }
 
-
-                            }
+                    }
                         }
                     
             }
         }
+        /// <summary>
+        /// Zobrazí novou nabídku pro doplnění čísel po kliknutí na prázdné pole. Pokud má uživatel zaškrtnuto políčko DoNotHighlightDumbNumbersCheckBox, metoda vyřadí čísla, která zjevně nemá podbarvovat.
+        /// </summary>
+        /// <param name="ButtonName">Tlačítko, na které bylo kliknuto.</param>
         public void ShowNumberMenu(GridButton ButtonName)
         {
             MainMenu.AlreadyLoaded = false;
@@ -196,14 +190,14 @@ namespace sudokuTM
         }
 
         /// <summary>
-        /// 
+        /// Konstruktor třídy GridButton.
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="row"></param>
-        /// <param name="column"></param>
-        /// <param name="width"></param>
-        /// <param name="left"></param>
-        /// <param name="top"></param>
+        /// <param name="name">Název tlačítka</param>
+        /// <param name="row">Řádek tlačítka</param>
+        /// <param name="column">Sloupec tlačítka</param>
+        /// <param name="width">Šířka tlačítka</param>
+        /// <param name="left">Odsazení zleva</param>
+        /// <param name="top">Odsazení zprava</param>
         public GridButton(string name, int row, int column, int width, int left, int top)
         {
             this.Click += new System.EventHandler(this.Cell_Click);
@@ -231,7 +225,7 @@ namespace sudokuTM
                     this.Cell = 3;
                 }
             }
-            else if(row < 3 && row < 7)
+            else if(row > 3 && row < 7)
             {
                 if (column > 0 && column < 4)
                 {
