@@ -331,7 +331,11 @@ namespace sudokuTM
         /// <param name="e">Obsahuje informace od události.</param>
         private void SolveButton_Click(object sender, EventArgs e)
         {
-            
+            if(!BruteForceSolving())
+                    {
+                        MessageBox.Show(String.Format("Sudoku nemá řešení, zjištěno po bruteforce!"));
+                    }
+            /*
             Updated3 = true;
             Stop = false;
             while (Sudoku.FilledInFields < 81)
@@ -425,7 +429,7 @@ namespace sudokuTM
                     Sudoku.FilledInFields = 81;
                 }
             }
-          
+          */
         }
         /// <summary>
         /// Při zavření Řešitele sudoku se připraví Dispose tohoto formuláře.
