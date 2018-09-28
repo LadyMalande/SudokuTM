@@ -8,13 +8,13 @@ using System.Drawing;
 
 namespace sudokuTM
 {
-   
+
     /// <summary>
     /// Třída pro tlačítka tvořící sudoku mřížku. Obsahuje nezbytné parametry pro snadnou práci v metodách zkoumající kolize čísel, vyhodnocování, nápovědu.
     /// </summary>
     public class GridButton : Button
     {
-        
+
         private void InitializeComponent()
         {
             // 
@@ -22,17 +22,33 @@ namespace sudokuTM
             // 
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.GridButton_KeyPress);
         }
-             
+        /// <summary>
+        /// 
+        /// </summary>
+        public int NumberOfSolutions;
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool[] SolverButtonStatus = new bool[9];
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool Solved;
         /// <summary>
         /// Seznam obsahující všechna tlačítka této třídy. Používán pro projíždění čísel pomocí struktury foreach.
         /// </summary>
         public static List<GridButton> ListOfGridButtons = new List<GridButton>();
-        
+
         /// <summary>
-        /// Parametry udávající řádek tlačítka (Row), sloupec tlačítka (Column) a příslušnou jednu buňku z devíti, ve které tlačítko leží (Cell).
+        /// Parametry udávající řádek tlačítka (Row), sloupec tlačítka (Column), příslušnou jednu buňku z devíti, ve které tlačítko leží (Cell).
         /// </summary>
-        public int Row, Column, Cell;     
-        
+        public int Row, Column, Cell;
+
+        /// <summary>
+        /// Řešení políčka (Solution).
+        /// </summary>
+        public string Solution;
+
         /// <summary>
         /// Kontroluje, zda jsou dvě tlačítka ve stejné buňce.
         /// </summary>
@@ -61,20 +77,23 @@ namespace sudokuTM
 
             foreach (var GridButton in ListOfGridButtons)
             {
-                if (GridButton.ForeColor == Color.Black)
+               
+                if (GridButton.ForeColor == Color.Black || GridButton.ForeColor == Color.DarkGray)
                 {
                     GridButton.BackColor = Color.WhiteSmoke;
                 }
                 else GridButton.BackColor = Color.White;
             }
-                    
-            if (Sudoku.HighlightSameNumbersCheckBox.Checked == true)
+            if (Sudoku.HighlightSameNumbersCheckBox != null)
             {
-                
-                bool IsInConflict = false;
-                ButtonName.BackColor = Color.LightGreen;
-                foreach (var GridButton in ListOfGridButtons)
+                if (Sudoku.HighlightSameNumbersCheckBox.Checked == true)
+                {
+
+                    bool IsInConflict = false;
                     
+                    ButtonName.BackColor = Color.LightGreen;
+                    foreach (var GridButton in ListOfGridButtons)
+
                         if (GridButton.Text != " ")
                         {
 
@@ -85,34 +104,84 @@ namespace sudokuTM
                             }
 
                         }
-                        foreach (var Button1 in ListOfCellsOfTheSameNumber)
-                        {
-                            IsInConflict = false;
-                           
+                    foreach (var Button1 in ListOfCellsOfTheSameNumber)
+                    {
+                        IsInConflict = false;
 
-                            foreach (var Button2 in ListOfCellsOfTheSameNumber)
+
+                        foreach (var Button2 in ListOfCellsOfTheSameNumber)
+                        {
+
+                            if ((Button1.Row == Button2.Row) || (Button1.Column == Button2.Column))
                             {
-                                
-                                if ((Button1.Row == Button2.Row) || (Button1.Column == Button2.Column))
+                                if ((Button1.Row == Button2.Row) && (Button1.Column == Button2.Column))
                                 {
-                                    if ((Button1.Row == Button2.Row) && (Button1.Column == Button2.Column))
-                                    {
-                                        if (!IsInConflict) Button1.BackColor = Color.LightGreen;
-                                        else Button1.BackColor = Color.Red;
-                                    }
-                                    else
-                                    {
-                                        Button1.BackColor = Color.Red;
-                                        Button2.BackColor = Color.Red;
-                                        IsInConflict = true;
-                                    }
+                                    if (!IsInConflict) Button1.BackColor = Color.LightGreen;
+                                    else Button1.BackColor = Color.Red;
                                 }
-                                
-                                else if (IsInTheSameCell(Button1.Cell, Button2.Cell)) { Button1.BackColor = Color.Red; Button2.BackColor = Color.Red; IsInConflict = true; }
+                                else
+                                {
+                                    Button1.BackColor = Color.Red;
+                                    Button2.BackColor = Color.Red;
+                                    IsInConflict = true;
+                                }
+                            }
+
+                            else if (IsInTheSameCell(Button1.Cell, Button2.Cell)) { Button1.BackColor = Color.Red; Button2.BackColor = Color.Red; IsInConflict = true; }
+
+                        }
+                    }
+
+                }
+            }
+            else
+            {
+
+                bool IsInConflict = false;
+                ButtonName.BackColor = Color.LightGreen;
+                foreach (var GridButton in ListOfGridButtons)
+
+
+
+                    if (GridButton.Text != " ")
+                    {
+
+                        if (GridButton.Text == ButtonName.Text)
+                        {
+                            ListOfCellsOfTheSameNumber.Add(GridButton);
+                            GridButton.BackColor = Color.LightGreen;
+                        }
 
                     }
+
+
+                foreach (var Button1 in ListOfCellsOfTheSameNumber)
+                {
+                    IsInConflict = false;
+
+
+                    foreach (var Button2 in ListOfCellsOfTheSameNumber)
+                    {
+
+                        if ((Button1.Row == Button2.Row) || (Button1.Column == Button2.Column))
+                        {
+                            if ((Button1.Row == Button2.Row) && (Button1.Column == Button2.Column))
+                            {
+                                if (!IsInConflict) Button1.BackColor = Color.LightGreen;
+                                else Button1.BackColor = Color.Red;
+                            }
+                            else
+                            {
+                                Button1.BackColor = Color.Red;
+                                Button2.BackColor = Color.Red;
+                                IsInConflict = true;
+                            }
                         }
-                    
+
+                        else if (IsInTheSameCell(Button1.Cell, Button2.Cell)) { Button1.BackColor = Color.Red; Button2.BackColor = Color.Red; IsInConflict = true; }
+
+                    }
+                }
             }
         }
         /// <summary>
@@ -148,6 +217,7 @@ namespace sudokuTM
                     else Sudoku.CreateNewButton(i.ToString(), 360 + Column * 50, 100 + Row * 50, Color.LightSlateGray);
 
                     Sudoku.CreateNewButton("Vymaž", 420, 300, Color.LightSlateGray);
+                    Sudoku.CreateNewButton("Napověz", 420, 350, Color.LimeGreen);
                 }
                 
             }
@@ -172,6 +242,7 @@ namespace sudokuTM
 
             HighlightSameNumbers(button);
             ShowNumberMenu(button);
+           
         }
 
         private void GridButton_KeyPress(object sender, KeyPressEventArgs e)
@@ -198,7 +269,8 @@ namespace sudokuTM
         /// <param name="width">Šířka tlačítka</param>
         /// <param name="left">Odsazení zleva</param>
         /// <param name="top">Odsazení zprava</param>
-        public GridButton(string name, int row, int column, int width, int left, int top)
+        /// <param name="solution">Řešení políčka</param>
+        public GridButton(string name, int row, int column, int width, int left, int top, string solution)
         {
             this.Click += new System.EventHandler(this.Cell_Click);
             this.Name = name;
@@ -209,6 +281,7 @@ namespace sudokuTM
             this.Left = left;
             this.Top = top;
             this.TabIndex = row * column - 1;
+            this.Solution = solution;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             if(row > 0 && row < 4)
             {

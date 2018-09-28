@@ -36,6 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.Continue = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.SolverButton = new System.Windows.Forms.Button();
             Tezka = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -89,7 +90,7 @@
             // Konec
             // 
             this.Konec.Font = new System.Drawing.Font("Tahoma", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Konec.Location = new System.Drawing.Point(61, 339);
+            this.Konec.Location = new System.Drawing.Point(61, 430);
             this.Konec.Name = "Konec";
             this.Konec.Size = new System.Drawing.Size(150, 50);
             this.Konec.TabIndex = 4;
@@ -122,18 +123,31 @@
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Moccasin;
-            this.label3.Location = new System.Drawing.Point(8, 427);
+            this.label3.Location = new System.Drawing.Point(8, 500);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(262, 17);
             this.label3.TabIndex = 8;
             this.label3.Text = "Tereza Miklóšová verze 20180925.0952";
+            // 
+            // SolverButton
+            // 
+            this.SolverButton.BackColor = System.Drawing.Color.PeachPuff;
+            this.SolverButton.Font = new System.Drawing.Font("Tahoma", 15.2F, System.Drawing.FontStyle.Bold);
+            this.SolverButton.Location = new System.Drawing.Point(46, 352);
+            this.SolverButton.Name = "SolverButton";
+            this.SolverButton.Size = new System.Drawing.Size(180, 72);
+            this.SolverButton.TabIndex = 9;
+            this.SolverButton.Text = "Vyřeš mi sudoku!";
+            this.SolverButton.UseVisualStyleBackColor = false;
+            this.SolverButton.Click += new System.EventHandler(this.SolverButton_Click);
             // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Moccasin;
-            this.ClientSize = new System.Drawing.Size(282, 453);
+            this.ClientSize = new System.Drawing.Size(282, 526);
+            this.Controls.Add(this.SolverButton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.Continue);
             this.Controls.Add(this.label2);
@@ -179,6 +193,7 @@
         /// Obsahuje informace o verzi projektu.
         /// </summary>
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button SolverButton;
     }
 }
 

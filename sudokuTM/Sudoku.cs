@@ -170,6 +170,19 @@ namespace sudokuTM
                     FilledInFields--;
                 }
             }
+            else if (button.Text == "Napověz")
+            {
+                if (WhereIWantToFillInNumber.Text == " ")
+                {
+                    WhereIWantToFillInNumber.Text = WhereIWantToFillInNumber.Solution;
+                    FilledInFields++;
+                }
+                else
+                {
+                    WhereIWantToFillInNumber.Text = WhereIWantToFillInNumber.Solution;
+                    
+                }
+            }
             else
             {
                 if (WhereIWantToFillInNumber.Text == " ") FilledInFields++;
@@ -192,6 +205,13 @@ namespace sudokuTM
                 ListOfNumbersButton.Height = 40;
 
                 ListOfNumbersButton.Width = 120;
+            }
+            else if(i == "Napověz")
+            {
+                ListOfNumbersButton.Height = 40;
+
+                ListOfNumbersButton.Width = 120;
+               
             }
             else
             {
@@ -266,6 +286,7 @@ namespace sudokuTM
                     string[] Numbers = Row.Split(' ');
                     for (int j = 1; j < 10; j++)
                     {
+                        SudokuGrid[i - 1, j - 1].Solution = Numbers[2 * j - 2];
                         if (Numbers[2 * j - 1] == "1")
                         {
                             SudokuGrid[i - 1, j - 1].Text = Numbers[2 * j - 2];
@@ -371,10 +392,11 @@ namespace sudokuTM
         /// <param name="Width">Šířka tlačítka</param>
         /// <param name="Left">Odsazení tlačítka zleva</param>
         /// <param name="Top">Odsazení tlačítka odshora</param>
-        /// <returns></returns>
-        public GridButton CreateGridButton(string Name, int Row, int Column, int Width, int Left, int Top)
+        /// <param name="Solution">Řešení tlačítka</param>
+        /// <returns>Metoda vrací vytvořené tlačítko pro sudoku mřížku.</returns>
+        static public GridButton CreateGridButton(string Name, int Row, int Column, int Width, int Left, int Top, string Solution)
         {
-            GridButton NewGridButton = new GridButton(Name, Row, Column, Width, Left, Top);
+            GridButton NewGridButton = new GridButton(Name, Row, Column, Width, Left, Top, Solution);
             return NewGridButton;
         } 
 
@@ -395,7 +417,7 @@ namespace sudokuTM
                     if (j >= 4) { jd = 4; }
                     if (j >= 7) { jd = 8; }
                     string NameOfButtonstring = (i).ToString() + (j).ToString();
-                    GridButton NewGridButton = CreateGridButton(NameOfButtonstring, i, j, 35, j * 35 + jd, i * 35 + id);
+                    GridButton NewGridButton = CreateGridButton(NameOfButtonstring, i, j, 35, j * 35 + jd, i * 35 + id, " ");
                     SudokuGrid[i - 1, j - 1] = NewGridButton;
                     Controls.Add(NewGridButton);
                     SudokuGrid[i - 1, j - 1].Show();

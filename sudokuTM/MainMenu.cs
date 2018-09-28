@@ -20,12 +20,18 @@ namespace sudokuTM
         /// </summary>
         public static bool AlreadyLoaded;
 
-        
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public static bool DisposeSudokuSolver;
         /// <summary>
         /// Form3 je okno samotné hry Sudoku.
         /// </summary>
         public static Sudoku Sudoku;
+        /// <summary>
+        /// 
+        /// </summary>
+        public static Solver1 SudokuSolver;
         /// <summary>
         /// Při zapnutí souboru SudokuTM.exe se spustí právě Form1. Ze základu je parametr AlreadyLoaded nastaven na false, protože tlačítko "Pokračovat" nemohlo být použito.
         /// </summary>
@@ -77,6 +83,10 @@ namespace sudokuTM
         private void RefreshTime_Tick(object sender, EventArgs e)
         {
             RefreshMenu();
+            if (DisposeSudokuSolver)
+            {
+                SudokuSolver.Dispose();
+            }
         }
 
         /// <summary>
@@ -160,6 +170,13 @@ namespace sudokuTM
             Sudoku.LoadDirectory("tezka");            
             Sudoku.Text = "Sudoku těžké";
             Sudoku.Show();
+        }
+
+        private void SolverButton_Click(object sender, EventArgs e)
+        {
+            SudokuSolver = new Solver1();
+            SudokuSolver.Text = "Řešitel sudoku";
+            SudokuSolver.Show();
         }
     }
 }
