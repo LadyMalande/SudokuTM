@@ -80,10 +80,19 @@
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="GridButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Resource1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Solver1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Solver1.Designer.cs">
+      <DependentUpon>Solver1.cs</DependentUpon>
     </Compile>
     <Compile Include="Sudoku.cs">
       <SubType>Form</SubType>
@@ -108,6 +117,9 @@
     <EmbeddedResource Include="Resource1.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Solver1.resx">
+      <DependentUpon>Solver1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sudoku.resx">
       <DependentUpon>Sudoku.cs</DependentUpon>
@@ -152,7 +164,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-   
     <Content Include="lehka\lehka1.txt" />
     <Content Include="lehka\lehka2.txt" />
     <Content Include="lehka\lehka3.txt" />
