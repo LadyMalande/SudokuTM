@@ -341,12 +341,7 @@ namespace sudokuTM
         /// <param name="e">Obsahuje informace od události.</param>
         private void SolveButton_Click(object sender, EventArgs e)
         {
-            int numberofbuttons = 0;
-            foreach(GridButton GB in ListOfGridButtonsSolver)
-            {
-                numberofbuttons++;
-            }
-            label1.Text = numberofbuttons.ToString();
+            
             if(!BruteForceSolving())
             {
                 MessageBox.Show(String.Format("Sudoku nemá řešení, zjištěno po bruteforce!"));
